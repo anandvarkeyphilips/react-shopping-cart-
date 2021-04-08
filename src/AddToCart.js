@@ -24,9 +24,13 @@ class AddToCart extends React.Component {
         }
     }
     buyEventHandler=()=>{
-        // trigger an event; emmbed the data as part of event;
+        // trigger an event; embed the data as part of event;
         var cartObj={...this.props.selectedProd,quantitySelected:this.state.quantitySelected}
         this.props.onBuyConfirmation(cartObj)
+    }
+    cancelBuyEventHandler=()=>{
+        // trigger an event; embed the data as part of event;
+        this.props.onBuyCancellation()
     }
     render() {
         console.log("Selected product", this.props.selectedProd)
@@ -42,14 +46,15 @@ class AddToCart extends React.Component {
                         <p className="card-text">Price :{product.price}</p>
                         <p className="card-text"> Quantity Available: {product.quantity}</p>
                         <input type="button" value="-" disabled={this.state.quantitySelected ===1}
-                        className="btn btn-warning" onClick={this.changeQuantity.bind(this, "dec")} />
+                        className="btn btn-light" onClick={this.changeQuantity.bind(this, "dec")} />
                         &nbsp;&nbsp;
                         {this.state.quantitySelected}
                         &nbsp;&nbsp;
                         <input type="button" value="+" disabled={this.state.quantitySelected === this.props.selectedProd.quantity}
-                        className="btn btn-warning" onClick={this.changeQuantity.bind(this, "inc")} />
+                        className="btn btn-light" onClick={this.changeQuantity.bind(this, "inc")} />
                         <br />
-                        <input type="button" value="Buy" onClick={this.buyEventHandler} className="btn btn-warning"/>
+                        <input type="button" value="Buy" onClick={this.buyEventHandler} className="btn btn-dark"/>
+                        <input type="button" value="Cancel" onClick={this.cancelBuyEventHandler} className="btn btn-secondary"/>
                     </div>
 
                 </div>

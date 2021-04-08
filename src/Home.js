@@ -8,7 +8,15 @@ class Home extends React.Component {
     {
         super();
         this.ctr=100
-        this.state={showAddToCart:false,selectedProduct:{}}
+        this.state={
+            productsArray:[
+                { productId: 1, productName: "Iphone", price: 68787, imageUrl: "./mobile-1.jpg", quantity: 10, description: "IPhone XR series" },
+                { productId: 2, productName: "Samsung", price: 90908, imageUrl: "./mobile-2.jpg", quantity: 15, description: "Samsung Note 9" },
+                { productId: 3, productName: "One Plus", price: 36789, imageUrl: "./mobile-3.jpg", quantity: 12, description: "One Plus 6" },
+                { productId: 4, productName: "MI", price: 247678, imageUrl: "./mobile-4.jpg", quantity: 3, description: "MI NOTE 5" }
+            ],
+            showAddToCart:false,
+            selectedProduct:{}}
         this.detailsEventHandler=this.detailsEventHandler.bind(this);
         
     }
@@ -28,16 +36,18 @@ class Home extends React.Component {
     }
     onBuyConfirmationEventHandler=(cartObj)=>{
         console.log("Confirmed Product",cartObj)
-        this.setState({showAddToCart:false})
+        //var tempArr=this.state.productsArray;//ref
+        var tempArr=[...this.state.productsArray];//copy
+        var pos=tempArr.findIndex(item => item.productId === cartObj.productId);
+        tempArr[pos].quantity-=cartObj.quantitySelected;
+        this.setState({showAddToCart:false,productsArray:tempArr})
+        this.props.onHomeBuyConfirmation(cartObj)
+    }
+    cancelBuyEventHandler=()=>{
+            this.setState({showAddToCart:false})
     }
     render() {
-        var productsArray = [
-            { productId: 1, productName: "Iphone", price: 68787, imageUrl: "./mobile-1.jpg", quantity: 10, description: "IPhone XR series" },
-            { productId: 2, productName: "Samsung", price: 90908, imageUrl: "./mobile-2.jpg", quantity: 15, description: "Samsung Note 9" },
-            { productId: 3, productName: "One Plus", price: 36789, imageUrl: "./mobile-3.jpg", quantity: 12, description: "One Plus 6" },
-            { productId: 4, productName: "MI", price: 247678, imageUrl: "./mobile-4.jpg", quantity: 3, description: "MI NOTE 5" }
-        ];
-        var trArr = productsArray.map((item) => {
+        var trArr = this.state.productsArray.map((item) => {
             return (
                 <tr key={item.productId}>
                     <td>
@@ -53,10 +63,10 @@ class Home extends React.Component {
                         {item.quantity}
                     </td>
                     <td>
-                        <input type="button" value="Add To Cart" className="btn btn-primary" 
+                        <input type="button" value="Add To Cart" className="btn btn-dark"
                         onClick={this.addToCartEventHandler.bind(this,item)} />
                         &nbsp;&nbsp;
-                        <input type="button" value="Details" className="btn btn-primary" 
+                        <input type="button" value="Details" className="btn btn-secondary"
                         onClick={this.detailsEventHandler} />
                     </td>
                 </tr>
@@ -64,7 +74,7 @@ class Home extends React.Component {
         })
         return (
             <div>
-                <table className="table bg-warning text-primary">
+                <table className="table bg-warning text-black">
                     <thead>
                         <tr>
                             <th>Image</th>
@@ -79,7 +89,12 @@ class Home extends React.Component {
                     </tbody>
                 </table>
                 {/* {this.showAddToCart?<AddToCart></AddToCart>:null} */}
-                {this.state.showAddToCart && <AddToCart onBuyConfirmation={this.onBuyConfirmationEventHandler} selectedProd={this.state.selectedProduct}></AddToCart>}
+                {this.state.showAddToCart && 
+                <AddToCart 
+                    onBuyConfirmation={this.onBuyConfirmationEventHandler}
+                    onBuyCancellation={this.cancelBuyEventHandler}
+                    selectedProd={this.state.selectedProduct}>
+                </AddToCart>}
             </div>
         )
     }

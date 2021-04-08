@@ -1,11 +1,8 @@
-import './App.css';
 
 function Menu() {
-  return (
-    <div>
-      <h1>Menu Shopping</h1>
-    </div>
-  );
+    return(
+        <h1>Menu Component</h1>
+    )
 }
 
 export default Menu;
