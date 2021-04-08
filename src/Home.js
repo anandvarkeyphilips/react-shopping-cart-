@@ -21,7 +21,7 @@ class Home extends React.Component {
         
     }
     addToCartEventHandler=(obj)=>{
-        alert("Add to Cart button clicked"+obj.productId);// 100 this== component scope
+        console.log("Add to Cart button clicked"+obj.productId);// 100 this== component scope
         //this.showAddToCart=true;
         this.setState({showAddToCart:true,selectedProduct:obj},()=>{
             console.log("Show add to cart",this.state.showAddToCart);//true
@@ -32,7 +32,7 @@ class Home extends React.Component {
     }
     detailsEventHandler()
     {
-        alert("Details button clicked"+this.ctr);// error; this -- button
+        console.log("Details button clicked"+this.ctr);// error; this -- button
     }
     onBuyConfirmationEventHandler=(cartObj)=>{
         console.log("Confirmed Product",cartObj)
@@ -74,7 +74,7 @@ class Home extends React.Component {
         })
         return (
             <div>
-                <table className="table bg-warning text-black">
+                <table className="table bg-warning table-hover text-black">
                     <thead>
                         <tr>
                             <th>Image</th>
