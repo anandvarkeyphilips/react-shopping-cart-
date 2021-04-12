@@ -2,9 +2,27 @@
 import React from 'react'
 
 class AddToCart extends React.Component {
-    constructor() {
-        super()
-        this.state = { quantitySelected: 1 }
+    constructor(props) {
+        super(props)
+        this.state = { quantitySelected: 1,selectedProd:this.props.selectedProd }
+    }
+    componentDidMount()
+    {
+        alert("Add to cart mounted")
+    }
+    componentWillUnmount()
+    {
+        alert("Add to cart is going to be unmounted")
+    }
+    static getDerivedStateFromProps(nextProps,prevState)
+    {
+        if(nextProps.selectedProd.productId !== prevState.selectedProd.productId)
+        {
+            return ({...prevState,quantitySelected:1,selectedProd:nextProps.selectedProd})
+        }
+        else
+            return prevState
+
     }
     changeQuantity = (str) => {
         if (str === "dec") {

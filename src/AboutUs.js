@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from "axios";
+// npm install --save axios
 
 export default class AboutUs extends React.Component
 {
@@ -37,7 +38,15 @@ export default class AboutUs extends React.Component
         var serverUrl="https://jsonplaceholder.typicode.com/posts"
         axios.post(serverUrl,{id:101,title:"hello"})
         .then((res)=>{
-                console.log(res)
+                console.log("Post request response", res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        serverUrl = "https://jsonplaceholder.typicode.com/posts/1"
+        axios.put(serverUrl, { myPostId:7777, title: "reactjs" })
+            .then((res) => {
+                console.log("Put request response", res)
         })
         .catch((err)=>{
                 console.log(err)
